@@ -10,26 +10,23 @@
       </el-form-item>
       <el-checkbox class="remember" v-model="rememberpwd">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
-        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')" :loading="logining">登录</el-button>
+        <el-button type="primary" style="width:100%;" @click="submitForm(ruleForm)" :loading="logining">登录</el-button>
         <el-button class="register" style="width:100%;" @click="toRegister">注册账号</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script type="text/ecmascript-6">
-// import { login } from '../api/user'
-// import { setCookie, getCookie, delCookie } from '../utils/util'
-// import md5 from 'js-md5'
+import { login } from "../../apis/user";
+import { setToken } from "@/utils/storage";
+
 export default {
   name: 'login',
   data() {
     return {
-      //定义loading默认为false
       logining: false,
-      // 记住密码
       rememberpwd: false,
       ruleForm: {
-        //username和password默认为空
         username: '',
         password: '',
       },
@@ -57,28 +54,56 @@ export default {
       }
     },
     //获取info列表
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.logining = true
-          // 测试通道，不为空直接登录
-          setTimeout(() => {
-            this.logining = false
-            // this.$store.commit('login', 'true')
-            this.$router.push({ path: '/show' })
-            console.log("here")
-          }, 1000)
-        } else {
-          this.$message.error('请输入用户名密码！')
-          this.logining = false
-          this.$router.push(
-            {
-              path: '/'
-            }
-          )
-          return false
+    async submitForm(formName) {
+      // this.$refs[formName].validate(valid => {
+      //   if (valid) {
+      //     this.logining = true
+      //     // 测试通道，不为空直接登录
+      //     setTimeout(() => {
+      //       this.logining = false
+      //       // this.$store.commit('login', 'true')
+      //       this.$router.push({ path: '/show' })
+      //       console.log("here")
+      //     }, 1000)
+      //   } else {
+      //     this.$message.error('请输入用户名密码！')
+      //     this.logining = false
+      //     this.$router.push(
+      //       {
+      //         path: '/'
+      //       }
+      //     )
+      //     return false
+      //   }
+      // })
+      const gotoMainPage = () => {
+        const redirect =
+          (this.$route.query && this.$route.query.redirect) || "/";
+        this.$router.push({ path: redirect });
+      };
+      try {
+        const result = await login(formName);
+        console.log(result);
+        // if (result.code === -1) {
+        //   return this.$message.error("登录失败");
+        // }
+        if (result.code === 200) {
+          setToken(result.token);
+          this.$message.success("登录成功");
+          gotoMainPage();
+        } else if (code === 455) {
+          this.$message.error("用户不存在");
+        } else if (code === 456) {
+          this.$message.error("密码不正确");
         }
-      })
+        
+        // this.$store.commit("user/setState", data);
+        // console.log("store 数据", this.$store.state);
+        // gotoMainPage();
+      } catch (err) {
+        this.$message.error("登录失败");
+        console.log("error", err);
+      }
     },
     toRegister() {
       this.$router.push({path: '/register'});

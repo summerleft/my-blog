@@ -6,7 +6,7 @@ export const routes = [
   {
     path: "/",
     component: Layout,
-    redirect: "/login",
+    redirect: "/show",
     name: "Basic",
     children: [
       {

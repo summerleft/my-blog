@@ -10,3 +10,14 @@ export function register(params) {
     }
   })
 }
+
+export function login(params) {
+  return request({
+    url: "/login",
+    method: "post",
+    data: {
+      username: params.username,
+      password: params.password
+    }
+  })
+}

@@ -48,7 +48,7 @@ export default {
         if (result.code === 200) {
           this.$message.success("注册成功");
           setTimeout( () => {
-            gotoMainPage();
+            this.$router.push({path: '/login'});
           }, 2000);  
         } else if (result.code === 454) {
           this.$message.error("用户已存在");
