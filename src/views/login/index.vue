@@ -27,8 +27,8 @@ export default {
       logining: false,
       rememberpwd: false,
       ruleForm: {
-        username: '',
-        password: '',
+        username: 'test1',
+        password: '123456',
       },
       //rules前端验证
       rules: {
@@ -40,7 +40,7 @@ export default {
   // 创建完毕状态(里面是操作)
   created() {
     this.$message({
-      message: '账号密码及验证码不为空即可',
+      message: '请输入账号密码',
       type: 'success'
     })
   },
@@ -55,45 +55,25 @@ export default {
     },
     //获取info列表
     async submitForm(formName) {
-      // this.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     this.logining = true
-      //     // 测试通道，不为空直接登录
-      //     setTimeout(() => {
-      //       this.logining = false
-      //       // this.$store.commit('login', 'true')
-      //       this.$router.push({ path: '/show' })
-      //       console.log("here")
-      //     }, 1000)
-      //   } else {
-      //     this.$message.error('请输入用户名密码！')
-      //     this.logining = false
-      //     this.$router.push(
-      //       {
-      //         path: '/'
-      //       }
-      //     )
-      //     return false
-      //   }
-      // })
       const gotoMainPage = () => {
         const redirect =
           (this.$route.query && this.$route.query.redirect) || "/";
         this.$router.push({ path: redirect });
       };
       try {
+        console.log(formName);
+        localStorage.setItem("token", "tokeninit");
         const result = await login(formName);
-        console.log(result);
-        // if (result.code === -1) {
-        //   return this.$message.error("登录失败");
-        // }
         if (result.code === 200) {
           setToken(result.token);
           this.$message.success("登录成功");
+          console.log(formName)
+          this.$store.commit("user/setState", {username: formName.username});
+          console.log(this.$store.state.user.username);
           gotoMainPage();
-        } else if (code === 455) {
+        } else if (result.code === 455) {
           this.$message.error("用户不存在");
-        } else if (code === 456) {
+        } else if (result.code === 456) {
           this.$message.error("密码不正确");
         }
         

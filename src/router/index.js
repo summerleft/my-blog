@@ -4,6 +4,16 @@ import Layout from "@/layout"
 
 export const routes = [
   {
+    path: "/login",
+    component: () => import("@/views/login"),
+    hidden: true,
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("@/views/login/Register"),
+  },
+  {
     path: "/",
     component: Layout,
     redirect: "/show",
@@ -21,16 +31,7 @@ export const routes = [
       },
     ]
   },
-  {
-    path: "/login",
-    component: () => import("@/views/login"),
-    hidden: true,
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: () => import("@/views/login/Register"),
-  }
+  
 ];
 
 export default new Router({

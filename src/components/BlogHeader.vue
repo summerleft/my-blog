@@ -6,12 +6,21 @@
         <router-link to="/add" exact>写博客</router-link>
       </li>
     </ul>
+    <div class="logout">
+      <button @click="handleLogout()">退出登录</button>
+    </div>
   </nav>
 </template>
 
 <script>
   export default{
-    name:"BlogHeader"
+    name:"BlogHeader",
+    methods: {
+      handleLogout() {
+        localStorage.removeItem('token');
+        this.$router.push({path:'/login'});
+      }
+    }
   }
 </script>
 
@@ -43,5 +52,13 @@ nav {
 .router-link-active {
   background: rgba(255, 255, 255, 0.8);
   color: #444;
+}
+
+button {
+  float: right;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
 }
 </style>

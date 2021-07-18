@@ -8,24 +8,9 @@
       <label for="">博客内容</label>
       <textarea v-model="blog.content"></textarea>
 
-      <div id="checkboxes">
-        <label for="">Vue.js</label>
-        <input type="checkbox" value="Vue.js" v-model="blog.categories">
-        <label for="">Node.js</label>
-        <input type="checkbox" value="Node.js" v-model="blog.categories">
-        <label for="">React.js</label>
-        <input type="checkbox" value="React.js" v-model="blog.categories">
-        <label for="">Angular</label>
-        <input type="checkbox" value="Angular" v-model="blog.categories">
-      </div>
-
       <label>作者:</label>
-      <select v-model="blog.author">
-        <option v-for="author in authors" :key="author">
-          {{author}}
-        </option>
-      </select>
-      <button v-on:click.prevent="post">添加博客</button>
+      <input type="text" v-model="blog.username" readonly>
+      <button v-on:click.prevent="submitForm(blog)">添加博客</button>
     </form>
 
     <div v-if="submitted">
@@ -39,18 +24,14 @@
       <p>博客标题:{{blog.title}}</p>
       <p>博客内容:</p>
       <p>{{blog.content}}</p>
-      <p>博客分类:</p>
-      <ul>
-        <li v-for="category in blog.categories" :key="category">
-          {{category}}
-        </li>
-      </ul>
-      <p>作者:{{blog.author}}</p>
+      <p>作者:{{blog.username}}</p>
     </div>
   </div>
 </template>
 
 <script>
+import { publish } from "../../apis/blog";
+
 export default {
   name: 'AddBlog',
   data () {
@@ -58,24 +39,23 @@ export default {
       blog:{
         title:"",
         content:"",
-        categories:[],
-        author:""
+        username:this.$store.state.user.username,
       },
-      authors:["Yayu Gao", "Xiaojun Hei", "Chengwei Zhang"],
       submitted: false
     }
   },
   methods:{
-    post:function(){
-      this.$http.post("https://jsonplaceholder.typicode.com/posts",{
-        title:this.blog.title,
-        body:this.blog.content,
-        userId:1
-      })
-        .then(function(data){
-          console.log(data);
-          this.submitted = true;
-        })
+    async submitForm(value) {
+      console.log(value);
+      console.log(publish);
+      const result = await publish(value);
+      console.log(result);
+      if (result.code === 200) {
+        this.$message.success("发表成功");
+        this.submitted = true;
+      } else {
+        this.$message.error("发表失败!");
+      }
     }
   }
 }

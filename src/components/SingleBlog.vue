@@ -15,10 +15,10 @@
       }
     },
     created(){
-      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.id)
-        .then(function(data){
-          this.blog = data.body;
-        })
+      // this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.id)
+      //   .then(function(data){
+      //     this.blog = data.body;
+      //   })
     }
   }
 </script>
