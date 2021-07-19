@@ -51,7 +51,7 @@ export default {
       const gotoMainPage = () => {
         const redirect =
           (this.$route.query && this.$route.query.redirect) || "/";
-        this.$router.push({ path: redirect });
+        this.$router.push({ path: "/show" });
       };
       try {
         console.log(formName);

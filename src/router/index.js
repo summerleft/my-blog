@@ -4,6 +4,10 @@ import Layout from "@/layout"
 
 export const routes = [
   {
+    path: "/",
+    redirect: "/login",
+  },
+  {
     path: "/login",
     component: () => import("@/views/login"),
     hidden: true,

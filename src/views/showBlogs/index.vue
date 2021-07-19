@@ -63,8 +63,7 @@ export default {
         type: 'warning'
       }).then(async () => {
         const result = await remove(id);
-        console.log(this.blogs);
-        this.$forceUpdate();
+        this.blogs = await (await all()).data;
         if (result.code === 200) {
           this.$message({
             type: 'success',
