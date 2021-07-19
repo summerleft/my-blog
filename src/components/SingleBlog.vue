@@ -1,11 +1,13 @@
 <template>
   <div id="single-blog">
     <h1>{{blog.title}}</h1>
-    <article>{{blog.body}}</article>
+    <article>{{blog.content}}</article>
   </div>
 </template>
 
 <script>
+  import { detail } from "../apis/blog";
+  
   export default {
     name:"single-blog",
     data(){
@@ -14,11 +16,14 @@
         blog:{}
       }
     },
-    created(){
+    async created(){
       // this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.id)
       //   .then(function(data){
       //     this.blog = data.body;
       //   })
+      const result = await detail(this.$route.params.id);
+      console.log(result);
+      this.blog = result.data.fields;
     }
   }
 </script>

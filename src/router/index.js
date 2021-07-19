@@ -1,6 +1,7 @@
 import Router from "vue-router";
 
 import Layout from "@/layout"
+import SingleBlog from '../components/SingleBlog.vue'
 
 export const routes = [
   {
@@ -33,9 +34,13 @@ export const routes = [
         name: "AddBlog",
         component: () => import("@/views/addBlog"),
       },
+      {
+        path: "/blog/:id",
+        name: "SingleBlog",
+        component: SingleBlog,
+      }
     ]
-  },
-  
+  }, 
 ];
 
 export default new Router({
