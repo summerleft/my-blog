@@ -46,13 +46,6 @@ export default {
   },
   // 里面的函数只有调用才会执行
   methods: {
-    getuserpwd() {
-      if (getCookie('user') != '' && getCookie('pwd') != '') {
-        this.ruleForm.username = getCookie('user')
-        this.ruleForm.password = getCookie('pwd')
-        this.rememberpwd = true
-      }
-    },
     //获取info列表
     async submitForm(formName) {
       const gotoMainPage = () => {

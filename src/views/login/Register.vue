@@ -43,6 +43,7 @@ export default {
       };
 
       try {
+        localStorage.setItem("token", "tokeninit");
         const result = await register(value);
         console.log(result);
         if (result.code === 200) {

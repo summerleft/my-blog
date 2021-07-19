@@ -54,7 +54,6 @@ export function update(params) {
   return request({
     url: "/update",
     method: "post",
-    header: "JWT" + " " + getToken(),
     data: {
       id: params.id,
       title: params.title,
