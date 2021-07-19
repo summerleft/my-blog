@@ -27,8 +27,8 @@ export default {
       logining: false,
       rememberpwd: false,
       ruleForm: {
-        username: 'test1',
-        password: '123456',
+        username: '',
+        password: '',
       },
       //rules前端验证
       rules: {

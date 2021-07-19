@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Layout from "@/layout"
 import SingleBlog from '../components/SingleBlog.vue'
 
+
 export const routes = [
   {
     path: "/",
@@ -38,6 +39,11 @@ export const routes = [
         path: "/blog/:id",
         name: "SingleBlog",
         component: SingleBlog,
+      },
+      {
+        path: "/revise/:id",
+        name: "UpdateBlog",
+        component: () => import("@/views/updateBlog"),
       }
     ]
   }, 
